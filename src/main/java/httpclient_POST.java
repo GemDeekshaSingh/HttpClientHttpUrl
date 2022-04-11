@@ -20,12 +20,12 @@ public class httpclient_POST {
             HttpPost httpPost = new HttpPost("https://gorest.co.in/public/v2/users");
             httpPost.addHeader("Accept", "application/json");
             httpPost.addHeader("Content-Type", "application/json");
-            httpPost.addHeader("Authorization", "Bearer 4b7449ffdab7b8b179330b5c667346dd473a4520256e555cb06000cbb7743310");
+            httpPost.addHeader("Authorization", "Bearer 1d223849ee348038c8ab3078d4759c2f9fab5b81921da28db3027fe25dfa1c27");
             StringBuilder nameObject = new StringBuilder();
             nameObject.append("{");
-            nameObject.append("\"name\":\"Krishan\",");
-            nameObject.append("\"email\":\"krishan.pandey@geminisolutions\",");
-            nameObject.append("\"gender\":\"male\",");
+            nameObject.append("\"name\":\"Deeksha\",");
+            nameObject.append("\"email\":\"Deeksha.Singh@geminisolutions\",");
+            nameObject.append("\"gender\":\"female\",");
             nameObject.append("\"status\":\"active\"");
             nameObject.append("}");
 
