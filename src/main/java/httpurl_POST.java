@@ -1,50 +1,55 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import org.json.simple.JSONObject;
+
+import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class httpurl_POST {
-    public static void main(String[] args) {
-        try {
+
+    public static void main(String[] args) throws IOException {
+        String url="https://gorest.co.in/public/v2/users";
+        URL object=new URL(url);
+
+        HttpURLConnection con = (HttpURLConnection) object.openConnection();
+        con.setDoOutput(true);
+        con.setDoInput(true);
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
+        con.setRequestProperty("Authorization", "Bearer 1d223849ee348038c8ab3078d4759c2f9fab5b81921da28db3027fe25dfa1c27");
+        con.setRequestMethod("POST");
+
+        JSONObject cred   = new JSONObject();
 
 
-            URL url = new URL("https://reqres.in/api/users/");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            conn.setDoOutput(true);
-
-            conn.setRequestMethod("POST");
-
-            conn.setRequestProperty("Content-Type", "application/json");
-
-            String input = "{\n" + "  \"name\": \"morpheus\", \n"
-                    + " \" job \" : \" leader \" , \n" + "}";
+        cred.put("name","Deeksha");
+        cred.put("email", "singhdeeksha1511@gmail.com");
+        cred.put("gender","female");
+        cred.put("status","active");
 
 
-            OutputStream os = conn.getOutputStream();
-            os.write(input.getBytes());
-            os.flush();
 
-            BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+        OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
+        wr.write(cred.toString());
+        wr.flush();
 
-            String output;
-            System.out.println("Output from Server.... \n");
 
-            while ((output = br.readLine()) != null) {
 
-                System.out.println(output);
+        StringBuilder sb = new StringBuilder();
+        int HttpResult = con.getResponseCode();
+        if (HttpResult == HttpURLConnection.HTTP_OK) {
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(con.getInputStream(), "utf-8"));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                sb.append(line + "\n");
             }
-            conn.disconnect();
-        } catch (MalformedURLException e) {
-
-            e.printStackTrace();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
+            br.close();
+            System.out.println("" + sb.toString());
+        } else {
+            System.out.println(con.getResponseMessage());
         }
+
+
+
     }
 }
